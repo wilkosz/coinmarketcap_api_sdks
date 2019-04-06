@@ -1,0 +1,221 @@
+---
+swagger: "2.0"
+info:
+  description: Define coinmarketcap's api in swagger 2.0 openapi standard
+  version: 1.0.0
+  title: Coinmarketcap API Swagger Implementation
+host: pro-api.coinmarketcap.com
+basePath: /v1
+schemes:
+- https
+produces:
+- application/json
+security:
+- ApiKeyAuth: []
+paths:
+  /cryptocurrency/map:
+    get:
+      summary: Get CoinMarketCap ID map
+      description: Returns a paginated list of all cryptocurrencies by CoinMarketCap ID. We recommend using this convenience endpoint to lookup and utilize our unique cryptocurrency id across all endpoints as typical identifiers like ticker symbols can match multiple cryptocurrencies and change over time. As a convenience you may pass a comma-separated list of cryptocurrency symbols as symbol to filter this list to only those you require.
+      parameters:
+      - name: listing_status
+        in: query
+        description: Only active coins are returned by default. Pass 'inactive' to get a list of coins that are no longer active.
+        required: false
+        type: string
+        default: active
+      - name: start
+        in: query
+        description: Optionally offset the start (1-based index) of the paginated list of items to return.
+        required: false
+        type: integer
+        default: 1
+        minimum: 1
+      - name: limit
+        in: query
+        description: Optionally specify the number of results to return. Use this parameter and the "start" parameter to determine your own pagination size.
+        required: false
+        type: integer
+        maximum: 5000
+        minimum: 1
+      - name: symbol
+        in: query
+        description: Optionally pass a comma-separated list of cryptocurrency symbols to return CoinMarketCap IDs for. If this option is passed, other options will be ignored.
+        required: false
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Map'
+              status:
+                $ref: '#/definitions/Status'
+        default:
+          description: Unexpected error
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+  /cryptocurrency/info:
+    get:
+      summary: Get metadata
+      description: Returns all static metadata for one or more cryptocurrencies including name, symbol, logo, and its various registered URLs.
+      parameters:
+      - name: id
+        in: query
+        description: 'One or more comma-separated CoinMarketCap cryptocurrency IDs. Example: "1,2"'
+        required: false
+        type: string
+      - name: symbol
+        in: query
+        description: 'Alternatively pass one or more comma-separated cryptocurrency symbols. Example: "BTC,ETH". At least one "id" or "symbol" is required.'
+        required: false
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                additionalProperties:
+                  $ref: '#/definitions/Info'
+        default:
+          description: Unexpected error
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    name: X-CMC_PRO_API_KEY
+    in: header
+definitions:
+  Map:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      symbol:
+        type: string
+      slug:
+        type: string
+      is_active:
+        type: integer
+        format: int64
+      first_historical_data:
+        type: string
+      last_historical_data:
+        type: string
+      platform:
+        type: string
+  Info:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      symbol:
+        type: string
+      category:
+        type: string
+      slug:
+        type: string
+      logo:
+        type: string
+      tags:
+        type: array
+        description: coin tags
+        items:
+          type: string
+      description:
+        type: string
+      date_added:
+        type: string
+      platform:
+        type: string
+      urls:
+        $ref: '#/definitions/Info_urls'
+  Status:
+    type: object
+    properties:
+      timestamp:
+        type: string
+      error_code:
+        type: integer
+        format: int64
+      error_message:
+        type: string
+      elapsed:
+        type: integer
+        format: int64
+      credit_count:
+        type: integer
+        format: int64
+  inline_response_200:
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Map'
+      status:
+        $ref: '#/definitions/Status'
+  inline_response_default:
+    properties:
+      status:
+        $ref: '#/definitions/Status'
+  inline_response_200_1:
+    properties:
+      data:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/Info'
+  Info_urls:
+    properties:
+      website:
+        type: array
+        items:
+          type: string
+      explorer:
+        type: array
+        items:
+          type: string
+      source_code:
+        type: array
+        items:
+          type: string
+      message_board:
+        type: array
+        items:
+          type: string
+      chat:
+        type: array
+        items:
+          type: string
+      announcement:
+        type: array
+        items:
+          type: string
+      reddit:
+        type: array
+        items:
+          type: string
+      twitter:
+        type: array
+        items:
+          type: string
+    description: Players associated with the
