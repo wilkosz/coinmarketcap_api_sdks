@@ -5,7 +5,7 @@
     "gemDescription" : "Swagger 2.0 Implementation of Coinmarketcaps API",
     "gemAuthor" : "Joshua Wilkosz",
     "gemAuthorEmail" : "joshua@wilkosz.com.au",
-    "gemHomepage" : "https://github.com/wilkosz/coinmarketcap_api_sdks/ruby",
+    "gemHomepage" : "https://github.com/wilkosz/coinmarketcap_api_sdks/tree/master/ruby",
     "moduleName" : "CoinmarketcapAPI",
     "packageName": "CoinmarketcapAPI",
     "apiPackage" : "CoinmarketcapClientAPI",
