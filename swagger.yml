@@ -87,6 +87,139 @@ paths:
                 type: object
                 additionalProperties:
                   $ref: '#/definitions/Info'
+              status:
+                $ref: '#/definitions/Status'
+        default:
+          description: Unexpected error
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+  /cryptocurrency/listings/historical:
+    get:
+      summary: List all cryptocurrencies (historical)
+      description: Get a paginated list of all cryptocurrencies with market data for a given historical time. Use the "convert" option to return market values in multiple fiat and cryptocurrency conversions in the same call.
+      parameters:
+      - name: timestamp
+        in: query
+        description: Timestamp (Unix or ISO 8601) to return historical cryptocurrency listings for.
+        required: false
+        type: string
+      - name: start
+        in: query
+        description: Optionally offset the start (1-based index) of the paginated list of items to return.
+        required: false
+        type: integer
+        default: 1
+        minimum: 1
+      - name: limit
+        in: query
+        description: Optionally specify the number of results to return. Use this parameter and the "start" parameter to determine your own pagination size.
+        required: false
+        type: integer
+        default: 100
+        maximum: 5000
+        minimum: 1
+      - name: convert
+        in: query
+        description: Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of supported fiat options can be found here. Each conversion is returned in its own "quote" object.
+        required: false
+        type: string
+        default: USD
+      - name: sort
+        in: query
+        description: |-
+          Valid values: `name` `symbol` `date_added` `market_cap` `price` `circulating_supply` `total_supply` `max_supply` `num_market_pairs` `volume_24h` `percent_change_1h` `percent_change_24h` `percent_change_7d`
+            What field to sort the list of cryptocurrencies by.
+        required: false
+        type: string
+        default: market_cap
+      - name: sort_dir
+        in: query
+        description: 'Valid values: `asc` `desc`. The direction in which to order cryptocurrencies against the specified sort.'
+        required: false
+        type: string
+      - name: cryptocurrency_type
+        in: query
+        description: 'Valid values: `all` `coins` `tokens` The type of cryptocurrency to include.'
+        required: false
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/MarketData'
+              status:
+                $ref: '#/definitions/Status'
+        default:
+          description: Unexpected error
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+  /cryptocurrency/listings/latest:
+    get:
+      summary: List all cryptocurrencies (latest)
+      description: Get a paginated list of all cryptocurrencies with latest market data. You can configure this call to sort by market cap or another market ranking field. Use the "convert" option to return market values in multiple fiat and cryptocurrency conversions in the same call.
+      parameters:
+      - name: start
+        in: query
+        description: Optionally offset the start (1-based index) of the paginated list of items to return.
+        required: false
+        type: integer
+        default: 1
+        minimum: 1
+      - name: limit
+        in: query
+        description: Optionally specify the number of results to return. Use this parameter and the "start" parameter to determine your own pagination size.
+        required: false
+        type: integer
+        default: 100
+        maximum: 5000
+        minimum: 1
+      - name: convert
+        in: query
+        description: Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of supported fiat options can be found here. Each conversion is returned in its own "quote" object.
+        required: false
+        type: string
+        default: USD
+      - name: sort
+        in: query
+        description: |-
+          Valid values: `name` `symbol` `date_added` `market_cap` `price` `circulating_supply` `total_supply` `max_supply` `num_market_pairs` `volume_24h` `percent_change_1h` `percent_change_24h` `percent_change_7d`
+            What field to sort the list of cryptocurrencies by.
+        required: false
+        type: string
+        default: market_cap
+      - name: sort_dir
+        in: query
+        description: 'Valid values: `asc` `desc`. The direction in which to order cryptocurrencies against the specified sort.'
+        required: false
+        type: string
+      - name: cryptocurrency_type
+        in: query
+        description: 'Valid values: `all` `coins` `tokens` The type of cryptocurrency to include.'
+        required: false
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/MarketData'
+              status:
+                $ref: '#/definitions/Status'
         default:
           description: Unexpected error
           schema:
@@ -100,6 +233,21 @@ securityDefinitions:
     name: X-CMC_PRO_API_KEY
     in: header
 definitions:
+  Platform:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      symbol:
+        type: string
+      slug:
+        type: string
+      token_address:
+        type: string
+    description: Metadata about the parent cryptocurrency platform this cryptocurrency belongs to if it is a token, otherwise null.
   Map:
     type: object
     properties:
@@ -117,10 +265,12 @@ definitions:
         format: int64
       first_historical_data:
         type: string
+        format: date-time
       last_historical_data:
         type: string
+        format: date-time
       platform:
-        type: string
+        $ref: '#/definitions/Platform'
   Info:
     type: object
     properties:
@@ -146,15 +296,84 @@ definitions:
         type: string
       date_added:
         type: string
+        format: date-time
       platform:
-        type: string
+        $ref: '#/definitions/Platform'
       urls:
         $ref: '#/definitions/Info_urls'
+  MarketData:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      symbol:
+        type: string
+      slug:
+        type: string
+      cmc_rank:
+        type: integer
+        format: int32
+      num_market_pairs:
+        type: integer
+        format: int32
+      circulating_supply:
+        type: integer
+        format: int64
+      total_supply:
+        type: integer
+        format: int64
+      max_supply:
+        type: integer
+        format: int64
+      last_updated:
+        type: string
+        format: date-time
+      date_added:
+        type: string
+        format: date-time
+      tags:
+        type: array
+        items:
+          type: string
+      platform:
+        $ref: '#/definitions/Platform'
+      quote:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/Quote'
+  Quote:
+    type: object
+    properties:
+      price:
+        type: number
+        format: float
+      volume_24h:
+        type: integer
+        format: int64
+      percent_change_1h:
+        type: number
+        format: float
+      percent_change_24h:
+        type: number
+        format: float
+      percent_change_7d:
+        type: number
+        format: float
+      market_cap:
+        type: integer
+        format: int64
+      last_updated:
+        type: string
+        format: date-time
   Status:
     type: object
     properties:
       timestamp:
         type: string
+        format: date-time
       error_code:
         type: integer
         format: int64
@@ -184,6 +403,16 @@ definitions:
         type: object
         additionalProperties:
           $ref: '#/definitions/Info'
+      status:
+        $ref: '#/definitions/Status'
+  inline_response_200_2:
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/MarketData'
+      status:
+        $ref: '#/definitions/Status'
   Info_urls:
     properties:
       website:

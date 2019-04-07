@@ -1,1 +1,2 @@
-/ruby
+**/*.DS_Store
+**/*.gem

@@ -2,7 +2,7 @@
 Swagger 2.0 Implementation of Coinmarketcap's API
 
 # Published Swagger Spec
-https://app.swaggerhub.com/apis-docs/wilkosz/coinmarketcap/1.0.0#/
+https://app.swaggerhub.com/apis-docs/wilkosz/coinmarketcap/1.0.0
 
 # Generate SDK
 
