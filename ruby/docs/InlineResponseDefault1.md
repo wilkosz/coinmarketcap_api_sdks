@@ -1,4 +1,4 @@
-# CoinmarketcapAPI::InlineResponseDefault1
+# CoinmarketcapClient::InlineResponseDefault1
 
 ## Properties
 Name | Type | Description | Notes

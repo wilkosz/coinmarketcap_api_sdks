@@ -12,7 +12,7 @@ Swagger Codegen version: 2.4.4
 
 require 'date'
 
-module CoinmarketcapAPI
+module CoinmarketcapClient
   class MarketData
     attr_accessor :id
 
@@ -254,7 +254,7 @@ module CoinmarketcapAPI
           end
         end
       else # model
-        temp_model = CoinmarketcapAPI.const_get(type).new
+        temp_model = CoinmarketcapClient.const_get(type).new
         temp_model.build_from_hash(value)
       end
     end

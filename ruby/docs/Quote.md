@@ -1,4 +1,4 @@
-# CoinmarketcapAPI::Quote
+# CoinmarketcapClient::Quote
 
 ## Properties
 Name | Type | Description | Notes

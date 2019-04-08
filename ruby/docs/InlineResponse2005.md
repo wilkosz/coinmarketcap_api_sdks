@@ -1,4 +1,4 @@
-# CoinmarketcapAPI::InlineResponse2005
+# CoinmarketcapClient::InlineResponse2005
 
 ## Properties
 Name | Type | Description | Notes

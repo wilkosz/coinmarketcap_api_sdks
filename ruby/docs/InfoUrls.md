@@ -1,4 +1,4 @@
-# CoinmarketcapAPI::InfoUrls
+# CoinmarketcapClient::InfoUrls
 
 ## Properties
 Name | Type | Description | Notes

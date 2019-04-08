@@ -1,4 +1,4 @@
-# CoinmarketcapAPI::Map
+# CoinmarketcapClient::Map
 
 ## Properties
 Name | Type | Description | Notes

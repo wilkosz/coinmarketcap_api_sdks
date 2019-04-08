@@ -1,16 +1,16 @@
 {
     "gemName" : "coinmarketcap_client",
-    "gemVersion" : "1.0.0",
+    "gemVersion" : "1.0.1",
     "gemSummary" : "Swagger 2.0 Implementation of Coinmarketcaps API",
     "gemDescription" : "Swagger 2.0 Implementation of Coinmarketcaps API",
     "gemAuthor" : "Joshua Wilkosz",
     "gemAuthorEmail" : "joshua@wilkosz.com.au",
     "gemHomepage" : "https://github.com/wilkosz/coinmarketcap_api_sdks/tree/master/ruby",
-    "moduleName" : "CoinmarketcapAPI",
-    "packageName": "CoinmarketcapAPI",
+    "moduleName" : "CoinmarketcapClient",
+    "packageName": "CoinmarketcapClient",
     "apiPackage" : "CoinmarketcapClientAPI",
     "modelPackage" : "CoinmarketcapClientModel",
     "invokerPackage" : "CoinmarketcapClient",
-    "packagePath" : "CoinmarketcapAPI",
+    "packagePath" : "CoinmarketcapClient",
     "variableNamingConvention" : "snake_case"
 }

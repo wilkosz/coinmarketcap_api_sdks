@@ -17,11 +17,11 @@ require "coinmarketcap_client/version"
 
 Gem::Specification.new do |s|
   s.name        = "coinmarketcap_client"
-  s.version     = CoinmarketcapAPI::VERSION
+  s.version     = CoinmarketcapClient::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Joshua Wilkosz"]
   s.email       = ["joshua@wilkosz.com.au"]
-  s.homepage    = "https://github.com/wilkosz/coinmarketcap_api_sdks"
+  s.homepage    = "https://github.com/wilkosz/coinmarketcap_api_sdks/tree/master/ruby"
   s.summary     = "Swagger 2.0 Implementation of Coinmarketcaps API"
   s.description = "Swagger 2.0 Implementation of Coinmarketcaps API"
   s.license     = "Unlicense"

@@ -36,10 +36,10 @@ require 'coinmarketcap_client/models/status'
 # APIs
 require 'coinmarketcap_client/api/default_api'
 
-module CoinmarketcapAPI
+module CoinmarketcapClient
   class << self
     # Customize default settings for the SDK using block.
-    #   CoinmarketcapAPI.configure do |config|
+    #   CoinmarketcapClient.configure do |config|
     #     config.username = "xxx"
     #     config.password = "xxx"
     #   end

@@ -10,6 +10,6 @@ Swagger Codegen version: 2.4.4
 
 =end
 
-module CoinmarketcapAPI
-  VERSION = '1.0.0'
+module CoinmarketcapClient
+  VERSION = '1.0.1'
 end

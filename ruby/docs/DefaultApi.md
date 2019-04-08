@@ -1,4 +1,4 @@
-# CoinmarketcapAPI::DefaultApi
+# CoinmarketcapClient::DefaultApi
 
 All URIs are relative to *https://pro-api.coinmarketcap.com/v1*
 
@@ -22,14 +22,14 @@ Returns all static metadata for one or more cryptocurrencies including name, sym
 # load the gem
 require 'coinmarketcap_client'
 # setup authorization
-CoinmarketcapAPI.configure do |config|
+CoinmarketcapClient.configure do |config|
   # Configure API key authorization: ApiKeyAuth
   config.api_key['X-CMC_PRO_API_KEY'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
   #config.api_key_prefix['X-CMC_PRO_API_KEY'] = 'Bearer'
 end
 
-api_instance = CoinmarketcapAPI::DefaultApi.new
+api_instance = CoinmarketcapClient::DefaultApi.new
 
 opts = { 
   id: 'id_example', # String | One or more comma-separated CoinMarketCap cryptocurrency IDs. Example: \"1,2\"
@@ -40,7 +40,7 @@ begin
   #Get metadata
   result = api_instance.cryptocurrency_info_get(opts)
   p result
-rescue CoinmarketcapAPI::ApiError => e
+rescue CoinmarketcapClient::ApiError => e
   puts "Exception when calling DefaultApi->cryptocurrency_info_get: #{e}"
 end
 ```
@@ -79,14 +79,14 @@ Get a paginated list of all cryptocurrencies with market data for a given histor
 # load the gem
 require 'coinmarketcap_client'
 # setup authorization
-CoinmarketcapAPI.configure do |config|
+CoinmarketcapClient.configure do |config|
   # Configure API key authorization: ApiKeyAuth
   config.api_key['X-CMC_PRO_API_KEY'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
   #config.api_key_prefix['X-CMC_PRO_API_KEY'] = 'Bearer'
 end
 
-api_instance = CoinmarketcapAPI::DefaultApi.new
+api_instance = CoinmarketcapClient::DefaultApi.new
 
 opts = { 
   timestamp: 'timestamp_example', # String | Timestamp (Unix or ISO 8601) to return historical cryptocurrency listings for.
@@ -102,7 +102,7 @@ begin
   #List all cryptocurrencies (historical)
   result = api_instance.cryptocurrency_listings_historical_get(opts)
   p result
-rescue CoinmarketcapAPI::ApiError => e
+rescue CoinmarketcapClient::ApiError => e
   puts "Exception when calling DefaultApi->cryptocurrency_listings_historical_get: #{e}"
 end
 ```
@@ -146,14 +146,14 @@ Get a paginated list of all cryptocurrencies with latest market data. You can co
 # load the gem
 require 'coinmarketcap_client'
 # setup authorization
-CoinmarketcapAPI.configure do |config|
+CoinmarketcapClient.configure do |config|
   # Configure API key authorization: ApiKeyAuth
   config.api_key['X-CMC_PRO_API_KEY'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
   #config.api_key_prefix['X-CMC_PRO_API_KEY'] = 'Bearer'
 end
 
-api_instance = CoinmarketcapAPI::DefaultApi.new
+api_instance = CoinmarketcapClient::DefaultApi.new
 
 opts = { 
   start: 1, # Integer | Optionally offset the start (1-based index) of the paginated list of items to return.
@@ -168,7 +168,7 @@ begin
   #List all cryptocurrencies (latest)
   result = api_instance.cryptocurrency_listings_latest_get(opts)
   p result
-rescue CoinmarketcapAPI::ApiError => e
+rescue CoinmarketcapClient::ApiError => e
   puts "Exception when calling DefaultApi->cryptocurrency_listings_latest_get: #{e}"
 end
 ```
@@ -211,14 +211,14 @@ Returns a paginated list of all cryptocurrencies by CoinMarketCap ID. We recomme
 # load the gem
 require 'coinmarketcap_client'
 # setup authorization
-CoinmarketcapAPI.configure do |config|
+CoinmarketcapClient.configure do |config|
   # Configure API key authorization: ApiKeyAuth
   config.api_key['X-CMC_PRO_API_KEY'] = 'YOUR API KEY'
   # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
   #config.api_key_prefix['X-CMC_PRO_API_KEY'] = 'Bearer'
 end
 
-api_instance = CoinmarketcapAPI::DefaultApi.new
+api_instance = CoinmarketcapClient::DefaultApi.new
 
 opts = { 
   listing_status: 'active', # String | Only active coins are returned by default. Pass 'inactive' to get a list of coins that are no longer active.
@@ -231,7 +231,7 @@ begin
   #Get CoinMarketCap ID map
   result = api_instance.cryptocurrency_map_get(opts)
   p result
-rescue CoinmarketcapAPI::ApiError => e
+rescue CoinmarketcapClient::ApiError => e
   puts "Exception when calling DefaultApi->cryptocurrency_map_get: #{e}"
 end
 ```

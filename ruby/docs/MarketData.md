@@ -1,4 +1,4 @@
-# CoinmarketcapAPI::MarketData
+# CoinmarketcapClient::MarketData
 
 ## Properties
 Name | Type | Description | Notes

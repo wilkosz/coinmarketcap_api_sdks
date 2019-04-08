@@ -12,7 +12,7 @@ Swagger Codegen version: 2.4.4
 
 require 'uri'
 
-module CoinmarketcapAPI
+module CoinmarketcapClient
   class Configuration
     # Defines url scheme
     attr_accessor :scheme

@@ -1,4 +1,4 @@
-# CoinmarketcapAPI::Status
+# CoinmarketcapClient::Status
 
 ## Properties
 Name | Type | Description | Notes
