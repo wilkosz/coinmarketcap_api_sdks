@@ -49,7 +49,7 @@ module CoinmarketcapClient
         :'percent_change_1h' => :'Float',
         :'percent_change_24h' => :'Float',
         :'percent_change_7d' => :'Float',
-        :'market_cap' => :'Integer',
+        :'market_cap' => :'Float',
         :'last_updated' => :'DateTime'
       }
     end

@@ -12,14 +12,14 @@ Swagger Codegen version: 2.4.4
 
 require 'spec_helper'
 
-describe CoinmarketcapAPI::Configuration do
-  let(:config) { CoinmarketcapAPI::Configuration.default }
+describe CoinmarketcapClient::Configuration do
+  let(:config) { CoinmarketcapClient::Configuration.default }
 
   before(:each) do
     # uncomment below to setup host and base_path
     # require 'URI'
     # uri = URI.parse("https://pro-api.coinmarketcap.com/v1")
-    # CoinmarketcapAPI.configure do |c|
+    # CoinmarketcapClient.configure do |c|
     #   c.host = uri.host
     #   c.base_path = uri.path
     # end

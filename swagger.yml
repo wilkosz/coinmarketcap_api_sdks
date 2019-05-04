@@ -52,7 +52,7 @@ paths:
               data:
                 type: array
                 items:
-                  $ref: '#/definitions/Map'
+                  $ref: '#/definitions/CryptocurrencyMap'
               status:
                 $ref: '#/definitions/Status'
         default:
@@ -69,7 +69,7 @@ paths:
       parameters:
       - name: id
         in: query
-        description: 'One or more comma-separated CoinMarketCap cryptocurrency IDs. Example: "1,2"'
+        description: One or more comma-separated CoinMarketCap cryptocurrency IDs. Example "1,2"
         required: false
         type: string
       - name: symbol
@@ -86,7 +86,7 @@ paths:
               data:
                 type: object
                 additionalProperties:
-                  $ref: '#/definitions/Info'
+                  $ref: '#/definitions/CryptocurrencyInfo'
               status:
                 $ref: '#/definitions/Status'
         default:
@@ -130,19 +130,19 @@ paths:
       - name: sort
         in: query
         description: |-
-          Valid values: `name` `symbol` `date_added` `market_cap` `price` `circulating_supply` `total_supply` `max_supply` `num_market_pairs` `volume_24h` `percent_change_1h` `percent_change_24h` `percent_change_7d`
+          Valid values `name` `symbol` `date_added` `market_cap` `price` `circulating_supply` `total_supply` `max_supply` `num_market_pairs` `volume_24h` `percent_change_1h` `percent_change_24h` `percent_change_7d`
             What field to sort the list of cryptocurrencies by.
         required: false
         type: string
         default: market_cap
       - name: sort_dir
         in: query
-        description: 'Valid values: `asc` `desc`. The direction in which to order cryptocurrencies against the specified sort.'
+        description: Valid values `asc` `desc`. The direction in which to order cryptocurrencies against the specified sort.
         required: false
         type: string
       - name: cryptocurrency_type
         in: query
-        description: 'Valid values: `all` `coins` `tokens` The type of cryptocurrency to include.'
+        description: Valid values `all` `coins` `tokens` The type of cryptocurrency to include.
         required: false
         type: string
       responses:
@@ -154,7 +154,7 @@ paths:
               data:
                 type: array
                 items:
-                  $ref: '#/definitions/MarketData'
+                  $ref: '#/definitions/CryptocurrencyListings'
               status:
                 $ref: '#/definitions/Status'
         default:
@@ -193,19 +193,19 @@ paths:
       - name: sort
         in: query
         description: |-
-          Valid values: `name` `symbol` `date_added` `market_cap` `price` `circulating_supply` `total_supply` `max_supply` `num_market_pairs` `volume_24h` `percent_change_1h` `percent_change_24h` `percent_change_7d`
+          Valid values `name` `symbol` `date_added` `market_cap` `price` `circulating_supply` `total_supply` `max_supply` `num_market_pairs` `volume_24h` `percent_change_1h` `percent_change_24h` `percent_change_7d`
             What field to sort the list of cryptocurrencies by.
         required: false
         type: string
         default: market_cap
       - name: sort_dir
         in: query
-        description: 'Valid values: `asc` `desc`. The direction in which to order cryptocurrencies against the specified sort.'
+        description: Valid values `asc` `desc`. The direction in which to order cryptocurrencies against the specified sort.
         required: false
         type: string
       - name: cryptocurrency_type
         in: query
-        description: 'Valid values: `all` `coins` `tokens` The type of cryptocurrency to include.'
+        description: Valid values `all` `coins` `tokens` The type of cryptocurrency to include.
         required: false
         type: string
       responses:
@@ -217,7 +217,97 @@ paths:
               data:
                 type: array
                 items:
-                  $ref: '#/definitions/MarketData'
+                  $ref: '#/definitions/CryptocurrencyListings'
+              status:
+                $ref: '#/definitions/Status'
+        default:
+          description: Unexpected error
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+  /global-metrics/quotes/latest:
+    get:
+      summary: Get aggregate market metrics (latest)
+      description: Get the latest quote of aggregate market metrics. Use the "convert" option to return market values in multiple fiat and cryptocurrency conversions in the same call.
+      parameters:
+      - name: convert_id
+        in: query
+        description: One or more comma-separated cryptocurrency CoinMarketCap IDs. Example 1,2
+        required: false
+        type: string
+      - name: convert
+        in: query
+        description: Optionally calculate market quotes in up to 120 currencies at once by passing a comma-separated list of cryptocurrency or fiat currency symbols. Each additional convert option beyond the first requires an additional call credit. A list of supported fiat options can be found here. Each conversion is returned in its own "quote" object.
+        required: false
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/GlobalMetricsQuotesLatest'
+              status:
+                $ref: '#/definitions/Status'
+        default:
+          description: Unexpected error
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+  /global-metrics/quotes/historical:
+    get:
+      summary: List all cryptocurrencies (latest)
+      description: Get a paginated list of all cryptocurrencies with latest market data. You can configure this call to sort by market cap or another market ranking field. Use the "convert" option to return market values in multiple fiat and cryptocurrency conversions in the same call.
+      parameters:
+      - name: time_start
+        in: query
+        description: Timestamp (Unix or ISO 8601) to start returning quotes for. Optional, if not passed, we'll return quotes calculated in reverse from "time_end".
+        required: false
+        type: string
+      - name: time_end
+        in: query
+        description: Timestamp (Unix or ISO 8601) to stop returning quotes for (inclusive). Optional, if not passed, we'll default to the current time. If no "time_start" is passed, we return quotes in reverse order starting from this time.
+        required: false
+        type: string
+      - name: count
+        in: query
+        description: The number of interval periods to return results for. Optional, required if both "time_start" and "time_end" aren't supplied. The default is 10 items. The current query limit is 10000.
+        required: false
+        type: integer
+        default: 10
+        maximum: 10000
+        minimum: 1
+      - name: interval
+        in: query
+        description: |-
+          Valid values "yearly" "monthly" "weekly" "daily" "hourly" "5m" "10m" "15m" "30m" "45m" "1h" "2h" "3h" "6h" "12h" "24h" "1d" "2d" "3d" "7d" "14d" "15d" "30d" "60d" "90d" "365d"
+            Interval of time to return data points for. See details in endpoint description.
+        required: false
+        type: string
+        default: 1d
+      - name: convert_id
+        in: query
+        description: One or more comma-separated cryptocurrency CoinMarketCap IDs. Example 1,2
+        required: false
+        type: string
+      - name: convert
+        in: query
+        description: By default market quotes are returned in USD. Optionally calculate market quotes in up to 3 other fiat currencies or cryptocurrencies.
+        required: false
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/inline_response_200_4_data'
               status:
                 $ref: '#/definitions/Status'
         default:
@@ -233,22 +323,7 @@ securityDefinitions:
     name: X-CMC_PRO_API_KEY
     in: header
 definitions:
-  Platform:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      name:
-        type: string
-      symbol:
-        type: string
-      slug:
-        type: string
-      token_address:
-        type: string
-    description: Metadata about the parent cryptocurrency platform this cryptocurrency belongs to if it is a token, otherwise null.
-  Map:
+  CryptocurrencyMap:
     type: object
     properties:
       id:
@@ -271,7 +346,7 @@ definitions:
         format: date-time
       platform:
         $ref: '#/definitions/Platform'
-  Info:
+  CryptocurrencyInfo:
     type: object
     properties:
       id:
@@ -300,8 +375,23 @@ definitions:
       platform:
         $ref: '#/definitions/Platform'
       urls:
-        $ref: '#/definitions/Info_urls'
-  MarketData:
+        $ref: '#/definitions/CryptocurrencyInfo_urls'
+  Platform:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      symbol:
+        type: string
+      slug:
+        type: string
+      token_address:
+        type: string
+    description: Metadata about the parent cryptocurrency platform this cryptocurrency belongs to if it is a token, otherwise null.
+  CryptocurrencyListings:
     type: object
     properties:
       id:
@@ -363,11 +453,77 @@ definitions:
         type: number
         format: float
       market_cap:
-        type: integer
-        format: int64
+        type: number
+        format: float
       last_updated:
         type: string
         format: date-time
+  GlobalMetricsQuotesHistorical:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        format: date-time
+      btc_dominance:
+        type: number
+        format: float
+      quote:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/GlobalMetricsHistoricalQuote'
+    description: Global metrics historical object
+  GlobalMetricsHistoricalQuote:
+    type: object
+    properties:
+      total_market_cap:
+        type: number
+        format: float
+      total_volume_24h:
+        type: number
+        format: float
+      timestamp:
+        type: string
+        format: date-time
+    description: Global metrics historical object
+  GlobalMetricsQuotesLatest:
+    type: object
+    properties:
+      btc_dominance:
+        type: number
+        format: float
+      eth_dominance:
+        type: number
+        format: float
+      active_cryptocurrencies:
+        type: integer
+        format: int32
+      active_market_pairs:
+        type: integer
+        format: int32
+      active_exchanges:
+        type: integer
+        format: int32
+      last_updated:
+        type: string
+        format: date-time
+      quote:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/GlobalMetricsQuote'
+    description: Global metrics object
+  GlobalMetricsQuote:
+    type: object
+    properties:
+      total_market_cap:
+        type: number
+        format: float
+      total_volume_24h:
+        type: number
+        format: float
+      last_updated:
+        type: string
+        format: date-time
+    description: Global market quote object
   Status:
     type: object
     properties:
@@ -390,7 +546,7 @@ definitions:
       data:
         type: array
         items:
-          $ref: '#/definitions/Map'
+          $ref: '#/definitions/CryptocurrencyMap'
       status:
         $ref: '#/definitions/Status'
   inline_response_default:
@@ -402,7 +558,7 @@ definitions:
       data:
         type: object
         additionalProperties:
-          $ref: '#/definitions/Info'
+          $ref: '#/definitions/CryptocurrencyInfo'
       status:
         $ref: '#/definitions/Status'
   inline_response_200_2:
@@ -410,10 +566,28 @@ definitions:
       data:
         type: array
         items:
-          $ref: '#/definitions/MarketData'
+          $ref: '#/definitions/CryptocurrencyListings'
       status:
         $ref: '#/definitions/Status'
-  Info_urls:
+  inline_response_200_3:
+    properties:
+      data:
+        $ref: '#/definitions/GlobalMetricsQuotesLatest'
+      status:
+        $ref: '#/definitions/Status'
+  inline_response_200_4_data:
+    properties:
+      quote:
+        type: array
+        items:
+          $ref: '#/definitions/GlobalMetricsQuotesHistorical'
+  inline_response_200_4:
+    properties:
+      data:
+        $ref: '#/definitions/inline_response_200_4_data'
+      status:
+        $ref: '#/definitions/Status'
+  CryptocurrencyInfo_urls:
     properties:
       website:
         type: array

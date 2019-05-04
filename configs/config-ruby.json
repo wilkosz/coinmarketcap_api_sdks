@@ -1,6 +1,6 @@
 {
     "gemName" : "coinmarketcap_client",
-    "gemVersion" : "1.0.1",
+    "gemVersion" : "1.0.2",
     "gemSummary" : "Swagger 2.0 Implementation of Coinmarketcaps API",
     "gemDescription" : "Swagger 2.0 Implementation of Coinmarketcaps API",
     "gemAuthor" : "Joshua Wilkosz",

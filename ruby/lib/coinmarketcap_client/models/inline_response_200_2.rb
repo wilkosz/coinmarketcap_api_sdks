@@ -29,7 +29,7 @@ module CoinmarketcapClient
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'data' => :'Array<MarketData>',
+        :'data' => :'Array<CryptocurrencyListings>',
         :'status' => :'Status'
       }
     end

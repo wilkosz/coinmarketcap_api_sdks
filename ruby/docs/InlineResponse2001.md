@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**Hash&lt;String, Info&gt;**](Info.md) |  | [optional] 
+**data** | [**Hash&lt;String, CryptocurrencyInfo&gt;**](CryptocurrencyInfo.md) |  | [optional] 
 **status** | [**Status**](Status.md) |  | [optional] 
 
 

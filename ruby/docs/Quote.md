@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **percent_change_1h** | **Float** |  | [optional] 
 **percent_change_24h** | **Float** |  | [optional] 
 **percent_change_7d** | **Float** |  | [optional] 
-**market_cap** | **Integer** |  | [optional] 
+**market_cap** | **Float** |  | [optional] 
 **last_updated** | **DateTime** |  | [optional] 
 
 

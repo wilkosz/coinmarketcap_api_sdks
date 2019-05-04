@@ -29,7 +29,7 @@ module CoinmarketcapClient
     # Attribute type mapping.
     def self.swagger_types
       {
-        :'data' => :'Hash<String, Info>',
+        :'data' => :'InlineResponse2004Data',
         :'status' => :'Status'
       }
     end
@@ -43,9 +43,7 @@ module CoinmarketcapClient
       attributes = attributes.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
 
       if attributes.has_key?(:'data')
-        if (value = attributes[:'data']).is_a?(Hash)
-          self.data = value
-        end
+        self.data = attributes[:'data']
       end
 
       if attributes.has_key?(:'status')
