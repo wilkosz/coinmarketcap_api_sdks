@@ -5,7 +5,7 @@ info:
   version: 1.0.0
   title: Coinmarketcap API Swagger Implementation
 host: pro-api.coinmarketcap.com
-basePath: /v1
+basePath: pro-api.coinmarketcap.com/v1
 schemes:
 - https
 produces:
@@ -21,7 +21,7 @@ paths:
       - name: listing_status
         in: query
         description: Only active coins are returned by default. Pass 'inactive' to get a list of coins that are no longer active.
-        required: false
+        required: true
         type: string
         default: active
       - name: start
@@ -34,14 +34,14 @@ paths:
       - name: limit
         in: query
         description: Optionally specify the number of results to return. Use this parameter and the "start" parameter to determine your own pagination size.
-        required: false
+        required: true
         type: integer
         maximum: 5000
         minimum: 1
       - name: symbol
         in: query
         description: Optionally pass a comma-separated list of cryptocurrency symbols to return CoinMarketCap IDs for. If this option is passed, other options will be ignored.
-        required: false
+        required: true
         type: string
       responses:
         200:
@@ -56,33 +56,33 @@ paths:
               status:
                 $ref: '#/definitions/Status'
         default:
-          description: Unexpected error
+          description:Unexpected error
           schema:
             type: object
             properties:
               status:
-                $ref: '#/definitions/Status'
+                $ref:'#/definitions/Status'
   /cryptocurrency/info:
     get:
-      summary: Get metadata
-      description: Returns all static metadata for one or more cryptocurrencies including name, symbol, logo, and its various registered URLs.
+      summary:Get metadata
+      description:Returns all static metadata for one or more cryptocurrencies including name, symbol, logo, and its various registered URLs.
       parameters:
-      - name: id
-        in: query
-        description: One or more comma-separated CoinMarketCap cryptocurrency IDs. Example "1,2"
-        required: false
-        type: string
-      - name: symbol
-        in: query
-        description: 'Alternatively pass one or more comma-separated cryptocurrency symbols. Example: "BTC,ETH". At least one "id" or "symbol" is required.'
-        required: false
-        type: string
-      responses:
-        200:
+      - name:id
+        in:query
+        description:One or more comma-separated CoinMarketCap cryptocurrency IDs. Example "1,2"
+        required:true
+        type:string
+      - name:symbol
+        in:query
+        description:'Alternatively pass one or more comma-separated cryptocurrency symbols. Example: "BTC,ETH". At least one "id" or "symbol" is required.'
+        required:true
+        type:string
+      responses:call,fetch,Get,Post
+        200:true
           description: OK
-          schema:
+          schema:query
             type: object
-            properties:
+            properties:RPC Call
               data:
                 type: object
                 additionalProperties:
@@ -621,4 +621,4 @@ definitions:
         type: array
         items:
           type: string
-    description: Players associated with the
+    description:people with an account or api keys.
